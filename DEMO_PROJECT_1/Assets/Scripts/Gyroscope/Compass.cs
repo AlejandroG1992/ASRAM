@@ -20,7 +20,8 @@ public class Compass : MonoBehaviour
 	private GameObject vision2;
 	private GameObject user;
 	private GameObject map2;
-	private double[] buffer = new double[30];
+	private double[] buffercos = new double[30];
+	private double[] buffersin = new double[30];
 	private static int i = 0;
 	// Called when script is loaded.
 	void Awake ()
@@ -43,25 +44,28 @@ public class Compass : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
+		double meanValueAnglecos;
+		double meanValueAnglesin;
 		double meanValueAngle;
 		Heading = Input.compass.trueHeading;
+
 		uiManager.WriteCompassValue (Heading.ToString ());
-		if (Heading < 5.0d || Heading > 355.0d) {
-			for (int k = 0; k < iMAX; k++) {
-				buffer [k] = Heading;
-			}
-		}
+
 		if (i > iMAX - 1)
 			i = 0;
-		buffer[i] = Heading;
+		buffercos[i] = (double)System.Math.Cos (Heading * System.Math.PI / 180.0d);
+		buffersin[i] = (double)System.Math.Sin (Heading * System.Math.PI / 180.0d);
 		i++;
+		meanValueAnglecos = 0.0d;
+		meanValueAnglesin = 0.0d;
 		meanValueAngle = 0.0d;
 		for (int j = 0; j < iMAX; j++) {
-			meanValueAngle += buffer [j];
+			meanValueAnglecos += buffercos [j];
+			meanValueAnglesin += buffersin [j];
 		}
-		meanValueAngle = meanValueAngle / iMAX;	
+		meanValueAngle = (double)System.Math.Atan2 (meanValueAnglesin, meanValueAnglecos)*180.0d/System.Math.PI;	
 		SetDirection (meanValueAngle);
-
+		uiManager.WriteCompassValue (meanValueAngle.ToString ());
 
 	}
 

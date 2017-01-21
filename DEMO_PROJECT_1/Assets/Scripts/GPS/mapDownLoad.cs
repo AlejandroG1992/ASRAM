@@ -5,7 +5,7 @@ using System.Collections;
 public class mapDownLoad : MonoBehaviour {
 	public GameObject plane;
 	public GameObject items;
-	public GameObject items2;
+
 	private float tileX;
 	private float tileY;
 	public float lat1;
@@ -69,17 +69,7 @@ public class mapDownLoad : MonoBehaviour {
 					item.transform.localPosition = new Vector3((float)a-0.5f, (float)b-0.5f, item.transform.localPosition.z);
 					//item.transform.position = new Vector3((float)a, (float)b, -0.2f);
 				}
-				foreach (Transform it in items2.transform){
-					GameObject item2 = it.gameObject;
-					a = DrawCubeX(item2.GetComponent<hotpoint>().Lon, TileToWorldPos(x, y, zoom-1).X, TileToWorldPos(x + 1, y, zoom-1).X);
-					b = DrawCubeY(item2.GetComponent<hotpoint>().Lat, TileToWorldPos(x, y + 1, zoom-1).Y, TileToWorldPos(x, y, zoom-1).Y);
-					if (a > 1.0f || a < 0.0f || b < 0.0f || b > 1.0f) {
-						a = -9000.0f;
-						b = -9000.0f;
-					}
-					item2.transform.localPosition = new Vector3((float)a-0.5f, (float)b-0.5f, item2.transform.localPosition.z);
-					//item.transform.position = new Vector3((float)a, (float)b, -0.2f);
-				}
+
 
 			}
 			yield return new WaitForSeconds(2);
