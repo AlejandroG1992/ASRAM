@@ -91,7 +91,7 @@ public class GoogleMap : MonoBehaviour
 				GetComponent<Renderer> ().material.mainTexture = req.texture;
 
 			}
-			yield return new WaitForSeconds(2);
+			yield return new WaitForSeconds(5);
 		}
 	}
 

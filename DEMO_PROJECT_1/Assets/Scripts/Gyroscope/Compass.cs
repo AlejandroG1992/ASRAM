@@ -15,6 +15,7 @@ public class Compass : MonoBehaviour
 	/// Reference to the UI manager object.
 	/// </summary>
 	/// 
+	public GameObject items2;
 	private UiManager uiManager;
 	private GameObject vision1;
 	private GameObject vision2;
@@ -49,7 +50,7 @@ public class Compass : MonoBehaviour
 		double meanValueAngle;
 		Heading = Input.compass.trueHeading;
 
-		uiManager.WriteCompassValue (Heading.ToString ());
+		//uiManager.WriteCompassValue (Heading.ToString ());
 
 		if (i > iMAX - 1)
 			i = 0;
@@ -95,5 +96,12 @@ public class Compass : MonoBehaviour
 		y = (double)vision2.transform.localScale.y * System.Math.Sin (angle2 * System.Math.PI / 180.0d) + user.transform.localPosition.y;
 
 		vision2.transform.localPosition = new Vector3((float)x, (float)y, vision2.transform.localPosition.z);
+
+		foreach (Transform it in items2.transform){
+			GameObject item2 = it.gameObject;
+
+			item2.transform.localRotation = Quaternion.Euler (item2.transform.localRotation.x, item2.transform.localRotation.y, item2.transform.localRotation.z + (float)angle0);
+
+		}
 	}
 }
